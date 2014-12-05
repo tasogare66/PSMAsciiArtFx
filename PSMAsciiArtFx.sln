@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSMAsciiArtFx", "PSMAsciiArtFx.csproj", "{0FEF8BED-4EF9-4FA6-A6BA-3074163B59AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FEF8BED-4EF9-4FA6-A6BA-3074163B59AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FEF8BED-4EF9-4FA6-A6BA-3074163B59AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FEF8BED-4EF9-4FA6-A6BA-3074163B59AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FEF8BED-4EF9-4FA6-A6BA-3074163B59AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = PSMAsciiArtFx.csproj
+	EndGlobalSection
+EndGlobal

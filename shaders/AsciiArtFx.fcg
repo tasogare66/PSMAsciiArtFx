@@ -1,0 +1,52 @@
+// Bitmap to ASCII (not really) fragment shader by movAX13h, September 2013
+// If you change the input channel texture, disable this:
+
+uniform sampler2D s_Texture : TEXUNIT0;
+uniform float2 iResolution = float2(960,544);
+
+#define HAS_GREENSCREEN
+
+float character( float n, float2 p ) // some compilers have the word "char" reserved
+{
+	// half texel offset
+//	float2 offs = float2(2.5f,2.5f);
+	float2 offs = float2(2.0f,2.0f);
+
+	p = floor( p*float2(4.0f, -4.0f) + offs);
+	if( clamp(p.x, 0.0f, 4.0f) == p.x && clamp(p.y, 0.0f, 4.0f) == p.y )
+	{
+//		if (int( fmod(n/exp2(p.x + 5.0f*p.y), 2.0f)) == 1 ) return 1.0f;
+		float c = fmod( n / exp2(p.x + 5.0f * p.y), 2.0f );
+		if (int(c) == 1) return 1;
+	}
+	return 0.0f;
+}
+
+void main( float2 in v_TexCoord  : TEXCOORD0,
+		   float4 in v_Color     : COLOR0,
+		   float4 out color      : COLOR )
+{
+	float2 uv = v_TexCoord * iResolution;
+	float3 col = tex2D( s_Texture, floor(uv/8.0f)*8.0f/iResolution).rgb;
+
+	#ifdef HAS_GREENSCREEN
+	float gray = (col.r + col.b)/2.0; // skip green component
+	#else
+	float gray = (col.r + col.g + col.b)/3.0;
+	#endif
+
+	float n =  65536.0;             // .
+	if (gray > 0.2f) n = 65600.0;    // :
+	if (gray > 0.3f) n = 332772.0;   // *
+	if (gray > 0.4f) n = 15255086.0; // o
+	if (gray > 0.5f) n = 23385164.0; // &
+	if (gray > 0.6f) n = 15252014.0; // 8
+	if (gray > 0.7f) n = 13199452.0; // @
+	if (gray > 0.8f) n = 11512810.0; // #
+
+	float2 p = fmod(uv/4.0f, 2.0f) - float2(1.0f,1.0f);
+	col = col*character(n, p);
+
+	color = float4(col,1.0f);
+}
+
